@@ -59,6 +59,7 @@ gulp.task('css', function () {
 
 
 /* MINIFY CSS ================================================= */
+// Optimize/minify Stylesheets
 gulp.task('minify-css', () => {
   return gulp.src('./src/Styles/dist/main.css')
     .pipe(cleanCSS({compatibility: '*'}))
@@ -68,6 +69,7 @@ gulp.task('minify-css', () => {
 
 
 /* JS ================================================================ */
+// Bundle Javascript
 gulp.task("js", function () {
   return gulp.src('./src/Scripts/src/main.js')
       .pipe(vinylNamed())
@@ -90,7 +92,8 @@ gulp.task("js", function () {
 // });
 
 
-/* IMAGES (Optimize Images) ================================================================ */
+/* IMAGES ================================================================ */
+// Optimize Images (GIF, PNG, JPEG)
 gulp.task('images', function() {
   return gulp.src('./src/Images/src/**/*')
     .pipe(imagemin())
@@ -99,6 +102,7 @@ gulp.task('images', function() {
 
 
 /* SVGO ================================================================ */
+// Optimize/minify SVG
 gulp.task('svgo', function () {
   return gulp.src('./src/Images/src/**/*.svg')
       .pipe(svgmin({
@@ -116,6 +120,7 @@ gulp.task('svgo', function () {
 
 
 /* BROWSER-SYNC ================================================= */
+// Serve up files locally
 gulp.task('browser-sync', function () {
   browserSync.init({
       server: {
@@ -127,6 +132,7 @@ gulp.task('browser-sync', function () {
 
 
 /* WATCH ================================================= */
+// Watch files for changes
 gulp.task('watch', function() {
   // HTML
   gulp.watch('./src/**/*.html', ['inject']);
