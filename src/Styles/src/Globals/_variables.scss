@@ -1,0 +1,39 @@
+﻿//@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+// BREAKPOINTS (Media Queries) =============================================== *
+$breakpoints: (
+  // Matched to Bootstrap $grid-breakpoints variables -------- *
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: 768px,
+  // Medium screen / tablet
+  md: 1024px,
+  // Large screen / desktop
+  lg: 1190px,
+  // Extra large screen / wide desktop
+  xl: 1400px
+);
+
+
+// COLORS =============================================== *
+
+// Base -----------
+$black: #000000;
+$light-grey: #EDECEC;
+$dark-grey: #4C4B4B;
+$white: #FFFFFF;
+
+// Secondary -----------
+
+
+
+// TYPOGRAPHY =============================================== *
+
+// Font Family ----------
+
+// Font Weight ----------
+$light: 300;
+$regular: 400;
+$bold: 700;
+$extra-bold: 900;

@@ -1,0 +1,7 @@
+# Node Dependencies
+package-lock.json
+node_modules
+
+# Compiled Bundled Files
+src/Scripts/dist
+src/Styles/dist

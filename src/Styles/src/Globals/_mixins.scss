@@ -1,0 +1,61 @@
+﻿@import "variables";
+// @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
+// BUTTONS =============================================== *
+
+
+// LINKS ============================================== *
+
+
+// LISTS ============================================== *
+// Reset
+@mixin list-reset {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+// MEDIA QUERIES =============================================== *
+// Min-width
+@mixin min-screen($breakpoint) {
+  // Retrieves the value from the key
+  $value: map-get($breakpoints, $breakpoint);
+
+  // If the key exists in the map
+  @if $value != null {
+    // Prints a media query based on the value
+    @media (min-width: $value) {
+        @content;
+    }
+}
+
+    // If the key doesn't exist in the map
+    @else {
+        @warn "No value could be retrieved from `#{$breakpoint}`. "
+            + "Make sure it is defined in `$breakpoints` map.";
+    }
+}
+
+// Max-width
+@mixin max-screen($breakpoint) {
+    // Retrieves the value from the key
+    $value: map-get($breakpoints, $breakpoint);
+
+    // If the key exists in the map
+    @if $value != null {
+        // Prints a media query based on the value
+        @media (max-width: $value) {
+        @content;
+    }
+}
+
+// If the key doesn't exist in the map
+@else {
+    @warn "No value could be retrieved from `#{$breakpoint}`. "
+        + "Make sure it is defined in `$breakpoints` map.";
+    }
+}
+
+
+

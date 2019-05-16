@@ -1,0 +1,42 @@
+﻿/* -----------------------------------------------------------------------------
+Import COMMON
+----------------------------------------------------------------------------- */
+@import "variables";
+@import "mixins";
+
+// don't target this!
+// used to visually align content in adjacent columns by removing the top margin off first elements
+.flush-top-margin {
+    > h1:first-child,
+    > h2:first-child,
+    > h3:first-child,
+    > h4:first-child,
+    > h5:first-child,
+    > h6:first-child {
+        margin-top: 0;
+        line-height: 1em;
+    }
+
+    > p:first-child {
+        margin-top: 0;
+    }
+}
+.container-fluid{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+// Remove Column Gutter Utility Class
+.no-gutter > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+
+// Show Grid
+// .row [class*='col-'] {
+//     background-color: #ffeeee;
+//     background-clip: content-box;
+//     min-height: 20px;
+// }
+
+

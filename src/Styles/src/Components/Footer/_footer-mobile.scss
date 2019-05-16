@@ -1,0 +1,20 @@
+// @import "../../../globals/variables";
+// @import "../../../globals/mixins";
+
+// @include max-screen(lg) {
+// 	footer {
+        
+//     }
+// }
+
+@include max-screen(md) {
+	footer {
+    }
+}
+
+@include max-screen(sm) {
+    footer {
+        
+    }
+}
+

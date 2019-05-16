@@ -1,0 +1,116 @@
+﻿/* -----------------------------------------------------------------------------
+Import BASE
+----------------------------------------------------------------------------- */
+@import "variables";
+@import "mixins";
+
+body {
+    font: {
+        //family: ;
+        size: 16px;
+    }
+    color: $black;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    @include max-screen(sm) {
+        size: 18px;
+    }
+}
+
+// PARAGRAPHS & LISTS =============================================== *
+
+p, ul, ol { 
+	font: {
+        //family: ;
+        weight: $regular;
+        size: 16px;
+    }
+    @include max-screen(sm) {
+        font-size: 18px;
+    }
+}
+
+p {
+    color: $dark-grey;
+    line-height: 26px;
+    a, a:visited {
+        //@include link;
+        color: $dark-grey;
+    }
+}
+
+p.small {
+    color: $dark-grey;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+
+// HEADLINES =============================================== *
+
+h1, h2, h3, h4 {
+    font: {
+        //family: ;
+    }
+    color: $black;
+}
+
+h1 {
+    font: {
+        weight: $light;
+        size: 42px;
+    }
+    line-height: 45px;
+    letter-spacing: 0.35px;
+    @include max-screen(sm) {
+        font-size: 42px;
+        line-height: 45px;
+    }
+}
+
+h2 {
+    font: {
+        weight: $light;
+        size: 36px;
+    }
+    line-height: 39px;
+    letter-spacing: 0.3px;
+    @include max-screen(sm) {
+        font-size: 32px;
+        line-height: 35px;
+    }
+}
+
+h3 {
+    font: {
+        weight: $bold;
+        size: 24px;
+    }
+    line-height: 36px;
+    @include max-screen(sm) {
+        font-size: 24px;
+        line-height: 36px;
+    }
+}
+
+h4 {
+    font: {
+        weight: $bold;
+        size: 18px;
+    }
+    line-height: 32px;
+    @include max-screen(sm) {
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
+
+// LINKS =============================================== *
+
+a, a:visited {
+    transition: all 200ms ease-in-out;
+}
+
+
+// FORM =============================================== *
+
