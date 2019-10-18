@@ -19,6 +19,9 @@ Run 'gulp serve' to build, serve the site up locally and start watching files:
 gulp serve
 ```
 
+Update browser support as needed in "browserslist" config in package.json, or create a separated '.browserlistrc' file:
+[https://github.com/browserslist/browserslist#readme]
+
 ### Task List
 
 #### Build

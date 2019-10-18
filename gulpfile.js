@@ -1,4 +1,4 @@
-var autoprefixer = require('gulp-autoprefixer');
+var autoprefixer = require('autoprefixer');
 var browserSync = require('browser-sync').create();
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
@@ -7,6 +7,7 @@ var gulp = require("gulp");
 var imagemin = require('gulp-imagemin');
 var inject = require('gulp-inject');
 var plumber = require('gulp-plumber');
+var postcss = require('gulp-postcss');
 var rename = require("gulp-rename");
 var replace = require('gulp-replace');
 var sass = require('gulp-sass');
@@ -48,9 +49,7 @@ gulp.task('css', function () {
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(plumber())
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions', 'ie >= 9']
-    }))
+    .pipe(postcss([ autoprefixer() ]))
     .pipe(concat('main.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./src/Styles/dist'))
