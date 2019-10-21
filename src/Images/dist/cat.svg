@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" version="1.0">
     <defs>
+        <linearGradient id="i">
+            <stop offset="0" stop-color="#0d8202"/>
+            <stop offset="1" stop-color="#73ce40"/>
+        </linearGradient>
         <linearGradient id="g">
             <stop offset="0" stop-color="#c02020"/>
             <stop offset="1" stop-color="#8b0f0f"/>
-        </linearGradient>
-        <linearGradient id="h">
-            <stop offset="0" stop-color="#6b141f"/>
-            <stop offset="1" stop-color="#bd162b"/>
         </linearGradient>
         <linearGradient id="k">
             <stop offset="0" stop-color="#6a6b14"/>
@@ -20,9 +20,9 @@
             <stop offset="0" stop-color="#236b14"/>
             <stop offset="1" stop-color="#62cd5b"/>
         </linearGradient>
-        <linearGradient id="i">
-            <stop offset="0" stop-color="#0d8202"/>
-            <stop offset="1" stop-color="#73ce40"/>
+        <linearGradient id="h">
+            <stop offset="0" stop-color="#6b141f"/>
+            <stop offset="1" stop-color="#bd162b"/>
         </linearGradient>
         <linearGradient id="j">
             <stop offset="0" stop-color="#6b141f"/>

@@ -13,8 +13,9 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps'); 
 const svgmin = require('gulp-svgmin');
 const vinylNamed = require('vinyl-named'); // allows use of [name] in gulp-webpack output
-const webpackConfig = require("./webpack.config");
+const webpack = require('webpack');
 const webpackStream = require('webpack-stream'); // Webpack enabled for use mid-stream
+
 
 
 /* INCLUDE & INJECT Task ================================================= */
@@ -77,7 +78,7 @@ function scripts() {
   // Source
   return gulp.src(['src/Scripts/src/main.js'], {base: "./src/Scripts/src"})
     .pipe(vinylNamed())
-    .pipe(webpackStream(webpackConfig))
+    .pipe(webpackStream(require('./webpack.config'), webpack))
     .pipe(gulp.dest('./src/Scripts/dist'))
     // Stream update to browsers
     .pipe(browserSync.stream());
@@ -128,7 +129,7 @@ function watch() {
   gulp.watch('./src/Styles/**/*.scss', styles);
   // HTML
   gulp.watch('./src/Components/**/*.html', include);
-  //gulp.watch('./src/**/*.html').on('change', browserSync.reload);
+  gulp.watch('./src/**/*.html').on('change', browserSync.reload);
   // JS
   gulp.watch('./src/Scripts/src/**/*.js', scripts);
   // IMAGES
