@@ -1,5 +1,5 @@
 # UI Prototype (Starter)
-### HTML/CSS/JS Prototype using **[Bootstrap 4](http://getbootstrap.com/)**, **[Webpack](https://webpack.js.org)** and **[Gulp](https://gulpjs.org/)** as a task-runner.
+### HTML/CSS/JS Prototype using **[Bootstrap 4](http://getbootstrap.com/)**, **[Webpack](https://webpack.js.org)** and **[Gulp 4](https://gulpjs.org/)** as a task-runner.
 *Requires **[Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)**, **[Webpack](https://github.com/webpack)** and **[Node](https://nodejs.org/en/download/)**.
 
 ---
