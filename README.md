@@ -36,6 +36,8 @@ Compile, Bundle, Serve in local browser, watch
 gulp serve
 ```
 
+### Individual Tasks 
+
 #### Inject
 Inject Component Partials to Page Layouts, Inject CSS/JS Bundles
 ```js
