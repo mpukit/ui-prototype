@@ -1,5 +1,5 @@
 # UI Prototype (Starter)
-### HTML/CSS/JS Prototype using **[Bootstrap 4](http://getbootstrap.com/)**, **[Webpack](https://webpack.js.org)** and **[Gulp](https://gulpjs.org/)** as a task-runner.
+### HTML/CSS/JS Prototype using **[Bootstrap 4](http://getbootstrap.com/)**, **[Webpack](https://webpack.js.org)** and **[Gulp 4](https://gulpjs.org/)** as a task-runner.
 *Requires **[Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)**, **[Webpack](https://github.com/webpack)** and **[Node](https://nodejs.org/en/download/)**.
 
 ---
@@ -18,6 +18,9 @@ Run 'gulp serve' to build, serve the site up locally and start watching files:
 ```js
 gulp serve
 ```
+
+Update browser support as needed in "browserslist" config in package.json, or create a separated '.browserlistrc' file:
+[https://github.com/browserslist/browserslist#readme]
 
 ### Task List
 

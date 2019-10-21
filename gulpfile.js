@@ -1,157 +1,154 @@
-var autoprefixer = require('gulp-autoprefixer');
-var browserSync = require('browser-sync').create();
-var cleanCSS = require('gulp-clean-css');
-var concat = require('gulp-concat');
-var fileinclude = require('gulp-file-include');
-var gulp = require("gulp");
-var imagemin = require('gulp-imagemin');
-var inject = require('gulp-inject');
-var plumber = require('gulp-plumber');
-var rename = require("gulp-rename");
-var replace = require('gulp-replace');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps'); 
-var svgmin = require('gulp-svgmin');
-var uglify = require("gulp-uglify");
-var util = require("gulp-util");
-var vinylNamed = require('vinyl-named'); // allows use of [name] in gulp-webpack output
-var webpack = require("webpack");
-var webpackConfig = require("./webpack.config");
-var webpackStream = require('webpack-stream'); // Webpack enabled for use mid-stream
+const autoprefixer = require('autoprefixer');
+const browserSync = require('browser-sync').create();
+const cleanCSS = require('gulp-clean-css');
+const concat = require('gulp-concat');
+const fileinclude = require('gulp-file-include');
+const gulp = require("gulp");
+const imagemin = require('gulp-imagemin');
+const inject = require('gulp-inject');
+const plumber = require('gulp-plumber');
+const postcss = require('gulp-postcss');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps'); 
+const svgmin = require('gulp-svgmin');
+const vinylNamed = require('vinyl-named'); // allows use of [name] in gulp-webpack output
+const webpackConfig = require("./webpack.config");
+const webpackStream = require('webpack-stream'); // Webpack enabled for use mid-stream
 
 
-/* INJECT ================================================= */
+/* INCLUDE & INJECT Task ================================================= */
 // Inject Component Partials to Page Layouts, Inject CSS/JS Bundles
-gulp.task('inject', function() {
+function include() {
   return gulp.src('./src/Pages/src/**/*.html')
-    // Components
-    .pipe(fileinclude({
-      prefix: '@@',
-      indent: true,
-      basepath: './src/Components/**'
-    }))
-    .pipe(replace(/[\u200B-\u200D\uFEFF]/g, "")) // Strip BOM being added (gulp-file-replace issue)
-    .pipe(gulp.dest('./src/Pages/dist'))
-    // CSS + JS Inject
-    .pipe(inject(
-      gulp.src(['./src/Styles/dist/main.css', './src/Scripts/dist/main.bundle.js'], { read: false }), { relative: true }))
-    .pipe(gulp.dest('./src/Pages/dist'))
-    .pipe(browserSync.stream());
-});
+  // Components
+  .pipe(fileinclude({
+    prefix: '@@',
+    indent: true,
+    basepath: './src/Components/**'
+  }))
+  // CSS + JS Inject
+  .pipe(inject(
+    gulp.src(['./src/Styles/dist/main.css', './src/Scripts/dist/main.bundle.js'], { read: false }), { relative: true })) // *DEV
+    // gulp.src(['./src/Styles/dist/main.min.css', './src/Scripts/dist/main.bundle.min.js'], { read: false }), { relative: true })) // *PROD
+  .pipe(gulp.dest('./src/Pages/dist'))
+  .pipe(browserSync.stream());
+}
 
 
-/* CSS ================================================= */
-// Compile Sass, Add Prefixes, Add Sourcemaps
-gulp.task('css', function () {
-  return gulp.src('./src/Styles/**/*.scss')
+/* CSS Task ================================================= */
+// Compile SCSS to CSS
+function styles() {
+  // Source
+  return gulp.src(['src/Styles/**/*.scss'], {base: "./src/Styles/src"})
+    // Compile, write sourcemaps, postcss tasks
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(plumber())
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions', 'ie >= 9']
-    }))
+    .pipe(postcss([ autoprefixer() ]))
     .pipe(concat('main.css'))
     .pipe(sourcemaps.write('.'))
+    // Save
+    .pipe(gulp.dest('./src/Styles/dist'))
+    // Stream update to browsers
+    .pipe(browserSync.stream());
+}
+
+/* MINIFY CSS Task ================================================================ */
+// Minify compiled CSS file
+function minstyles() {
+  // Source
+  return gulp.src('./src/Styles/dist/main.css')
+    .pipe(sourcemaps.init())
+    .pipe(cleanCSS({compatibility: 'ie10'}))
+    .pipe(sourcemaps.write()) // *Optional
+    // Save
+    .pipe(rename({
+      suffix: '.min'
+    }))
     .pipe(gulp.dest('./src/Styles/dist'))
     .pipe(browserSync.stream());
-});
+}
 
-
-/* MINIFY CSS ================================================= */
-// Optimize/minify Stylesheets
-gulp.task('minify-css', () => {
-  return gulp.src('./src/Styles/dist/main.css')
-    .pipe(cleanCSS({compatibility: '*'}))
-    .pipe(concat('main.min.css'))
-    .pipe(gulp.dest('./src/Styles/dist'));
-});
-
-
-/* JS ================================================================ */
+/* JS Task ================================================================ */
 // Bundle Javascript
-gulp.task("js", function () {
-  return gulp.src('./src/Scripts/src/main.js')
-      .pipe(vinylNamed())
-      .pipe(webpackStream(webpackConfig))
-      .pipe(gulp.dest('./src/Scripts/dist'))
-});
-
-// gulp.task("min:js", function () {
-//     webpackConfig.plugins = [
-//         new webpack.optimize.UglifyJsPlugin({
-//             compress: { warnings: false },
-//             minimize: true
-//         })
-//     ];
-//     webpackConfig.devtool = "#source-map";
-//     return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
-//         .pipe(vinylNamed())
-//         .pipe(webpackStream(webpackConfig))
-//         .pipe(gulp.dest("."));
-// });
+function scripts() {
+  // Source
+  return gulp.src(['src/Scripts/src/main.js'], {base: "./src/Scripts/src"})
+    .pipe(vinylNamed())
+    .pipe(webpackStream(webpackConfig))
+    .pipe(gulp.dest('./src/Scripts/dist'))
+    // Stream update to browsers
+    .pipe(browserSync.stream());
+}
 
 
-/* IMAGES ================================================================ */
+/* IMAGES Task ================================================================ */
 // Optimize Images (GIF, PNG, JPEG)
-gulp.task('images', function() {
+function images() {
+  // Source
   return gulp.src('./src/Images/src/**/*')
     .pipe(imagemin())
     .pipe(gulp.dest('./src/Images/dist'))
-});
+    .pipe(browserSync.stream());
+}
 
 
-/* SVGO ================================================================ */
+/* SVGO Task ================================================================ */
 // Optimize/minify SVG
-gulp.task('svgo', function () {
+function svgo() {
+  // Source
   return gulp.src('./src/Images/src/**/*.svg')
-      .pipe(svgmin({
-          js2svg: {
-              pretty: true
-          },
-          plugins: [
-              {
-                  removeTitle: true
-              }
-          ]
-      }))
-      .pipe(gulp.dest('./src/Images/dist'))
-});
+    .pipe(svgmin({
+      js2svg: {
+        pretty: true
+      },
+      plugins: [
+        {
+          removeTitle: true
+        }
+      ]
+    }))
+    .pipe(gulp.dest('./src/Images/dist'))
+    .pipe(browserSync.stream());
+}
 
 
-/* BROWSER-SYNC ================================================= */
-// Serve up files locally
-gulp.task('browser-sync', function () {
-  browserSync.init({
-      server: {
-          baseDir: "./src/",
-          index: "prototype.html"
-      }
-  });
-});
-
-
-/* WATCH ================================================= */
+/* WATCH Task ================================================= */
 // Watch files for changes
-gulp.task('watch', function() {
-  // HTML
-  gulp.watch('./src/**/*.html', ['inject']);
+function watch() {
+  browserSync.init({
+    server: {
+      baseDir: "./src/",
+      index: "prototype.html"
+    }
+  });
   // CSS
-  gulp.watch('./src/Styles/**/*.scss', ['css']);
+  gulp.watch('./src/Styles/**/*.scss', styles);
+  // HTML
+  gulp.watch('./src/Components/**/*.html', include);
+  //gulp.watch('./src/**/*.html').on('change', browserSync.reload);
   // JS
-  gulp.watch(['./src/Scripts/*.js', './src/Scripts/src/*.js'], ['js']);
-});
+  gulp.watch('./src/Scripts/src/**/*.js', scripts);
+  // IMAGES
+  //gulp.watch('./src/Images/src/**/*.*', images); // *Optional
+  // SVG
+  // gulp.watch('./src/Images/src/**/*.svg', svgo); // *Optional
+}
 
+/* More Complex Tasks ================================================= */
+//const build = gulp.parallel(styles, minstyles, scripts, include, images, svgo);
+const build = gulp.series(styles, gulp.parallel(minstyles, scripts, include, images, svgo));
+const serve = gulp.series(styles, minstyles, scripts, include, images, svgo, gulp.parallel(watch));
 
-/* BUILD ================================================= */
-// Compile and Bundle
-gulp.task('build', function () {
-    gulp.start('svgo', 'images', 'css', 'minify-css', 'inject', 'css', 'js');
-});
-
-
-/* SERVE ================================================= */
-// Compile, Bundle, Serve in local browser, watch
-gulp.task('serve', function () {
-    gulp.start('svgo', 'images', 'css', 'minify-css', 'inject', 'css', 'js', 'browser-sync', 'watch');
-});
+// Export All Tasks
+exports.styles = styles;
+exports.minstyles = minstyles;
+exports.scripts = scripts;
+exports.include = include;
+exports.images = images;
+exports.svgo = svgo;
+exports.watch = watch;
+exports.build = build;
+exports.serve = serve;
