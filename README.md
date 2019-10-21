@@ -6,7 +6,7 @@
 
 Navigate to the root directory:
 ```js
-cd Prototype
+cd ui-prototype
 ```
 
 Run 'npm install' to install the required dependencies:
@@ -39,25 +39,25 @@ gulp serve
 #### Inject
 Inject Component Partials to Page Layouts, Inject CSS/JS Bundles
 ```js
-gulp inject
+gulp include
 ```
 
 #### CSS
 Compile Sass, Add Prefixes, Add Sourcemaps
 ```js
-gulp css
+gulp styles
 ```
 
 #### Minify CSS
 Optimize/minify Stylesheets
 ```js
-gulp minify-css
+gulp minstyles
 ```
 
 #### JS
 Bundle Javascript
 ```js
-gulp js
+gulp scripts
 ```
 
 #### Images
@@ -72,14 +72,8 @@ Optimize/minify SVG
 gulp svgo
 ```
 
-#### BrowserSync
-Serve up files locally
-```js
-gulp browser-sync
-```
-
 #### Watch
-Watch files for changes
+Watch files for changes, Run BrowserSync
 ```js
 gulp watch
 ```
