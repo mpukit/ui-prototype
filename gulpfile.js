@@ -30,7 +30,7 @@ function include() {
   }))
   // CSS + JS Inject
   .pipe(inject(
-    gulp.src(['./src/Styles/dist/main.css', './src/Scripts/dist/main.bundle.js'], { read: false }), { relative: true })) // *DEV
+    gulp.src(['./src/Styles/dist/main.css', './src/Scripts/dist/main.bundle.js'], { read: false, allowEmpty: true }), { relative: true })) // *DEV
     // gulp.src(['./src/Styles/dist/main.min.css', './src/Scripts/dist/main.bundle.min.js'], { read: false }), { relative: true })) // *PROD
   .pipe(gulp.dest('./src/Pages/dist'))
   .pipe(browserSync.stream());
@@ -77,6 +77,7 @@ function minstyles() {
 function scripts() {
   // Source
   return gulp.src(['src/Scripts/src/main.js'], {base: "./src/Scripts/src"})
+    .pipe(sourcemaps.init())
     .pipe(vinylNamed())
     .pipe(webpackStream(require('./webpack.config'), webpack))
     .pipe(gulp.dest('./src/Scripts/dist'))
@@ -138,10 +139,11 @@ function watch() {
   // gulp.watch('./src/Images/src/**/*.svg', svgo); // *Optional
 }
 
+
 /* More Complex Tasks ================================================= */
 //const build = gulp.parallel(styles, minstyles, scripts, include, images, svgo);
 const build = gulp.series(styles, gulp.parallel(minstyles, scripts, include, images, svgo));
-const serve = gulp.series(styles, minstyles, scripts, include, images, svgo, gulp.parallel(watch));
+const serve =  gulp.series(styles, minstyles, scripts, include, images, svgo, gulp.parallel(watch));
 
 // Export All Tasks
 exports.styles = styles;
