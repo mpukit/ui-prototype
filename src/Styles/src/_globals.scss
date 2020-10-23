@@ -19,10 +19,10 @@ $grid-gutter-width: 40px;
 // xl: 1200px
 // );
 $container-max-widths: (
-    sm: 540px,
-    md: 720px,
-    lg: 960px,
-    xl: 1440px
+    sm: 768px,
+    md: 992px,
+    lg: 1190px,
+    xl: 1400px
 );
 // Required
 @import "../../../node_modules/bootstrap/scss/functions";
