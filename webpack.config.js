@@ -1,24 +1,34 @@
 const webpack = require('webpack');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
 
 module.exports = {
     //entry: './src/Scripts/src/main.js',
     entry: {
         "bundle": "./src/Scripts/src/main.js",
-        //"bundle.min": "./src/Scripts/src/main.js", *TODO - Erroring out
+        //"bundle.min": "./src/Scripts/src/main.js"
     },
-    devtool: 'inline-source-map',
+    //Turns off the 244k asset limit warning
+    performance: {hints: false},
+    
+    devtool: 'source-map',
     output: {
-        filename: 'main.bundle.js',
+        filename: 'main.[name].min.js',
         path: path.resolve(__dirname, 'dist')
     },
-    // optimization: { *TODO - Erroring out
-    //     minimize: true,
-    //     minimizer: [new UglifyJsPlugin({
-    //       include: /\.min\.js$/
-    //     })]
-    // },
+     optimization: { 
+         minimize: true,
+         minimizer: [new TerserPlugin({
+             sourceMap: true,
+            include: /\.min\.js$/
+         })]
+     },
+     plugins: [
+        new UnminifiedWebpackPlugin()
+    ],
+    
+
     // Support for Individual Bootstrap Component Loading
     module: {
         rules: [{
